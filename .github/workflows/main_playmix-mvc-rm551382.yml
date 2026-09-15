@@ -20,15 +20,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '17'
-
-    - name: Debug env
-      run: |
-        if [ -z "$SPRING_DATASOURCE_URL" ]; then echo "VAZIA"; else echo "PREENCHIDA, tamanho=${#SPRING_DATASOURCE_URL}"; fi
-      env:
-        SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
     
     - name: Build with Maven
-      run: mvn clean install
+      run: |
+        if [ -z "$SPRING_DATASOURCE_URL" ]; then echo "VAZIA NO BUILD"; else echo "PREENCHIDA NO BUILD, tamanho=${#SPRING_DATASOURCE_URL}"; fi
+        mvn clean install
       env:
         SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
         SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
